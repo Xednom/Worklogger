@@ -16,7 +16,7 @@ def home(request):
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ['project', 'remarks']
+        fields = ['project', 'description']
 
 class TimeForm(ModelForm):
     class Meta:
