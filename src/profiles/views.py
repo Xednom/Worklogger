@@ -16,7 +16,7 @@ def home(request):
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ['project', 'description']
+        fields = ['project', 'remarks']
 
 class TimeForm(ModelForm):
     class Meta:
@@ -67,17 +67,6 @@ def add_project(request):
     all_project = Project.objects.all()
     all_time = Time.objects.all()
     total_duration = Time.objects.all().aggregate(Sum('duration'))
-    query = request.GET.get("q")
-    if query:
-        search_time = Time.objects.filter(Q(date__icontains=query) |
-        Q(duration__icontains=query)
-        ).distinct()
-        context = {
-        'all_project': all_project,
-        'search_time': search_time,
-        'total_duration': total_duration
-        }
-        return render(request, 'profiles/projects/project.html', context)
     if request.method == 'POST':
         project_form = ProjectForm(request.POST or None)
         time_form = TimeForm(request.POST or None)
