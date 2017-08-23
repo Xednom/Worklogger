@@ -1,0 +1,37 @@
+{% extends 'profiles/base.html' %}
+{% load crispy_forms_tags %}
+{% block head %}
+<title>Register</title>
+{% endblock %}
+
+{% block jumbotron %}
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+         <div class="panel panel-default">
+           <div class="panel-body">
+             <div class="form-group">
+                <h1>Register</h1>
+                <form method="post">
+                  {% csrf_token %}
+                   {% for field in form %}
+                  <p>
+                      {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                      {% endif %}
+                      {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                      {% endfor %}
+                  </p>
+                   {% endfor %}
+                   {{ form|crispy }}<br>
+                   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+             </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+  <!-- Static navbar -->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Dynameyes Worklogger</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+
+          <ul class="nav navbar-nav">
+              {% url 'project' as project %}
+              <li{% if request.path == project %} class="active" {% endif %}><a href="{% url 'add_project' %}">Project</a></li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Account <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      {% if not request.user.is_authenticated %}
+                      <li><a href="{% url 'login' %}">Login</a></li>
+                      <li><a href="{% url 'register' %}">Signup</a></li>
+                      {% else %}
+                      <li><a href="{% url 'logout' %}">Signout</a></li>
+                      {% endif %}
+                  </ul>
+              </li>
+          </ul>
+      </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</div>
+</nav>

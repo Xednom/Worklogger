@@ -1,0 +1,39 @@
+{% extends 'profiles/base.html' %}
+{% block head %}
+<title>Login</title>
+{% endblock %}
+
+{% block jumbotron %}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+         <div class="panel panel-default">
+            <div class="panel panel-header">
+               <h1>Login</h1>
+            </div>
+           <div class="panel-body">
+             <div class="form-group">
+                <form id="login-form" class="form-signin" action="{% url 'login' %}" method="post">{% csrf_token %}
+                  <h3 class="form-signin-heading">{{ message }}</h3>
+                  <label for="id_username" class="sr-only">Username</label>
+                  <input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>
+                  <br>
+                  <label for="id_password" class="sr-only">Password</label>
+                  <input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
+                  <div class="checkbox">
+                  </div>
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+               </form>
+             </div> <!-- /container -->
+            </div>
+            <div class="panel-footer">
+              Don't have an account?&nbsp<a href="{% url 'register' %}">Click here</a> to register. <br>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}
