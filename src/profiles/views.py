@@ -5,6 +5,9 @@ from django.db.models import Sum
 from django.db.models import Q
 from django.forms import ModelForm
 from django.core.urlresolvers import reverse
+from django.views.generic import View
+
+
 from .forms import RegistrationForm, ProjectForm, TimeForm
 from .models import Project, Time
 
@@ -16,23 +19,15 @@ def home(request):
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = ['project', 'description']
+        fields = ['created_date']
 
 class TimeForm(ModelForm):
     class Meta:
         model = Time
-        fields = ['date','duration']
-
-def login_information(request):
-    all_project = Project.objects.all()
-    all_time = Time.objects.all()
-    context = {
-    'all_project': all_project,
-    'all_time': all_time
-    }
-    return render(request, 'profiles/projects/login_information.html', context)
+        fields = ['date','project','duration','remarks','description']
 
 def login(request):
+
     _message = "Please login"
     if request.method == 'POST':
         _username = request.POST['username']
@@ -49,19 +44,27 @@ def login(request):
     context = {'message': _message,}
     return render(request, 'profiles/account/login.html', context)
 
-def register(request):
-    if request.method =='POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'profiles/account/login.html')
-        else:
-            return render(request, 'profiles/account/register.html', {'form': form})
-    else:
-        form = RegistrationForm()
+class RegistrationFormView(View):
+    form_class = RegistrationForm
+    template_name = 'profiles/account/register.html'
 
-        args = {'form': form}
-        return render(request, 'profiles/account/register.html', args)
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+
+            user = form.save(commit=False)
+
+            _username = form.cleaned_data['username']
+            _password = form.cleaned_data['password1']
+            user.set_password(_password)
+            user.save()
+        return render(request, 'profiles/account/register.html', {'form':form})
 
 def add_project(request):
     all_project = Project.objects.all()

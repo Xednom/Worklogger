@@ -83,14 +83,20 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = (
             'project',
-            'description'
         )
 
 class TimeForm(forms.ModelForm):
-
+    date = forms.DateTimeField(widget=forms.SelectDateWidget(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Select a date',
+        }
+    ))
     class Meta:
         model = Time
         fields = (
         'duration',
         'date',
+        'description'
+
         )
