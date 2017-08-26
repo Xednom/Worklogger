@@ -29,7 +29,6 @@ class RegistrationFormView(View):
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
 
-
     def post(self, request):
         form = self.form_class(request.POST)
 
@@ -67,15 +66,11 @@ def add_project(request):
     all_time = Time.objects.all()
     total_duration = Time.objects.all().aggregate(Sum('duration'))
     if request.method == 'POST':
-        project_form = ProjectForm(request.POST or None)
         time_form = TimeForm(request.POST or None)
-        if project_form.is_valid():
-            project_form.save()
         if time_form.is_valid():
             time_form.save()
             return redirect('add_project')
         context = {
-        'project_form': project_form,
         'time_form': time_form,
         'all_project': all_project,
         'all_time': all_time,
@@ -83,11 +78,9 @@ def add_project(request):
         }
         return render(request, 'profiles/projects/project.html', context)
     else:
-        project_form = ProjectForm()
         time_form = TimeForm()
 
         context = {
-        'project_form': project_form,
         'time_form': time_form,
         'all_project': all_project,
         'all_time': all_time,
