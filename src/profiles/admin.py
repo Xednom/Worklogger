@@ -6,7 +6,7 @@ class ProjectProfileAdmin(admin.ModelAdmin):
     list_display = ['project','created_date']
 
 class TimeProfileAdmin(admin.ModelAdmin):
-    list_display = ['duration',]
+    list_display = ['duration','remarks']
 
 admin.site.register(Project, ProjectProfileAdmin)
 admin.site.register(Time, TimeProfileAdmin)

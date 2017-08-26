@@ -24,25 +24,7 @@ class ProjectForm(ModelForm):
 class TimeForm(ModelForm):
     class Meta:
         model = Time
-        fields = ['date','project','duration','remarks','description']
-
-def login(request):
-
-    _message = "Please login"
-    if request.method == 'POST':
-        _username = request.POST['username']
-        _password = request.POST['password']
-        user = authenticate(username=_username, password=_password)
-        if user is not None:
-            if user.is_active:
-                auth_login(request, user)
-                return redirect(reverse('add_project'))
-            else:
-                _message = 'Your account is not activated'
-        else:
-            _message = "Username or password is incorrect."
-    context = {'message': _message,}
-    return render(request, 'profiles/account/login.html', context)
+        fields = ['project','duration','remarks']
 
 class RegistrationFormView(View):
     form_class = RegistrationForm
@@ -65,6 +47,25 @@ class RegistrationFormView(View):
             user.set_password(_password)
             user.save()
         return render(request, 'profiles/account/register.html', {'form':form})
+
+def login(request):
+
+    _message = "Please login"
+    if request.method == 'POST':
+        _username = request.POST['username']
+        _password = request.POST['password']
+        user = authenticate(username=_username, password=_password)
+        if user is not None:
+            if user.is_active:
+                auth_login(request, user)
+                return redirect(reverse('add_project'))
+            else:
+                _message = 'Your account is not activated'
+        else:
+            _message = "Username or password is incorrect."
+    context = {'message': _message,}
+    return render(request, 'profiles/account/login.html', context)
+
 
 def add_project(request):
     all_project = Project.objects.all()

@@ -96,7 +96,6 @@ class TimeForm(forms.ModelForm):
         model = Time
         fields = (
         'duration',
-        'date',
-        'description'
-
+        'remarks',
+        'date'
         )

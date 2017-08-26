@@ -1,0 +1,6 @@
+*.pyc
+*~
+__pycache__
+Worklogger
+/static
+.DS_Store
