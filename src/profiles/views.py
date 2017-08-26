@@ -16,11 +16,6 @@ from .models import Project, Time
 def home(request):
     return render(request, 'profiles/home.html')
 
-class ProjectForm(ModelForm):
-    class Meta:
-        model = Project
-        fields = ['created_date']
-
 class TimeForm(ModelForm):
     class Meta:
         model = Time
