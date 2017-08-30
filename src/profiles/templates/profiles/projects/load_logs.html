@@ -1,0 +1,31 @@
+{% extends 'profiles/base.html' %}
+
+{% block body %}
+    <form method="GET">
+      <div class="form-group">{% csrf_token %}
+        Choose a date: <input type="date" name="date">
+        <input type="submit" value="Search">
+    </form>
+
+      </div>
+      <div class="table-responsive">
+            <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Duration</th>
+                <th>Project</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for time in queryset_list %}
+            <tr>
+              <td>{{ time.duration }}</td>
+              <td>{{ time.project }}</td>
+              <td>{{ time.remarks }}</td>
+            </tr>
+              {% endfor %}
+            </tbody>
+            </table>
+      </div>
+{% endblock %}

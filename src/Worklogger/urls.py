@@ -24,10 +24,11 @@ from profiles import views as profile_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', profile_views.home, name="home"),
+    url(r'^$', profile_views.HomeView.as_view(), name="home"),
+    url(r'^time-logs/$', profile_views.load_logs, name="load_logs"),
     url(r'^login/$', profile_views.login, name="login"),
     url(r'^register/$', profile_views.RegistrationFormView.as_view(), name="register"),
-    url(r'^home/$', profile_views.home, name="home"),
+    url(r'^home/$', profile_views.HomeView.as_view(), name="home"),
     url(r'^project-add/$', profile_views.add_project, name="add_project"),
     url(r'^logout/$', logout, {'template_name': 'profiles/account/logout_user.html'}, name ='logout'),
 

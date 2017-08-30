@@ -5,21 +5,24 @@ from django.db.models import Sum
 from django.db.models import Q
 from django.forms import ModelForm
 from django.core.urlresolvers import reverse
-from django.views.generic import View
+from django.shortcuts import get_object_or_404
+from django.views import View, generic
 
 
-from .forms import RegistrationForm, ProjectForm, TimeForm
+from .forms import RegistrationForm, TimeForm
 from .models import Project, Time
 
 
 # Create your views here.
-def home(request):
-    return render(request, 'profiles/home.html')
+class HomeView(View):
+    template_name = 'profiles/home.html'
+
 
 class TimeForm(ModelForm):
     class Meta:
         model = Time
-        fields = ['project','duration','remarks']
+        fields = ['project', 'duration', 'remarks', 'date']
+
 
 class RegistrationFormView(View):
     form_class = RegistrationForm
@@ -42,8 +45,8 @@ class RegistrationFormView(View):
             user.save()
         return render(request, 'profiles/account/register.html', {'form':form})
 
-def login(request):
 
+def login(request):
     _message = "Please login"
     if request.method == 'POST':
         _username = request.POST['username']
@@ -61,7 +64,19 @@ def login(request):
     return render(request, 'profiles/account/login.html', context)
 
 
+def load_logs(request):
+    queryset_list = Time.objects.all()
+    query = request.GET.get("date")
+    if query:
+        queryset_list = queryset_list.filter(date__icontains=query)
+    context = {
+        "queryset_list": queryset_list
+    }
+    return render(request, 'profiles/projects/load_logs.html', context)
+
+
 def add_project(request):
+
     all_project = Project.objects.all()
     all_time = Time.objects.all()
     total_duration = Time.objects.all().aggregate(Sum('duration'))
@@ -70,20 +85,14 @@ def add_project(request):
         if time_form.is_valid():
             time_form.save()
             return redirect('add_project')
-        context = {
-        'time_form': time_form,
-        'all_project': all_project,
-        'all_time': all_time,
-        'total_duration': total_duration
-        }
-        return render(request, 'profiles/projects/project.html', context)
+        return render(request, 'profiles/projects/project.html')
     else:
         time_form = TimeForm()
 
         context = {
-        'time_form': time_form,
-        'all_project': all_project,
-        'all_time': all_time,
-        'total_duration': total_duration
+            'time_form': time_form,
+            'all_project': all_project,
+            'all_time': all_time,
+            'total_duration': total_duration
         }
         return render(request, 'profiles/projects/project.html', context)
