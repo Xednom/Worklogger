@@ -1,10 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
-from profiles.models import Project, Time
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
+from profiles.models import Project, Time
+
+
+
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+
     username = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'form-control',
@@ -12,32 +15,28 @@ class RegistrationForm(UserCreationForm):
         }
     ))
 
-    first_name = forms.CharField(required=True)
-    first_name = forms.CharField(widget=forms.TextInput(
+    first_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'First name',
         }
     ))
 
-    last_name = forms.CharField(required=True)
-    last_name = forms.CharField(widget=forms.TextInput(
+    last_name = forms.CharField(required=True, widget=forms.TextInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Last name',
         }
     ))
 
-    password1 = forms.CharField(required=True)
-    password1 = forms.CharField(widget=forms.PasswordInput(
+    password1 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Password',
         }
     ))
 
-    password2 = forms.CharField(required=True)
-    password2 = forms.CharField(widget=forms.PasswordInput(
+    password2 = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Confirm password',
@@ -66,6 +65,7 @@ class RegistrationForm(UserCreationForm):
 
             return user
 
+
 class EditProfileForm(UserChangeForm):
 
     class Meta:
@@ -88,7 +88,7 @@ class TimeForm(forms.ModelForm):
     class Meta:
         model = Time
         fields = (
-        'duration',
-        'remarks',
-        'date'
+            'duration',
+            'remarks',
+            'date'
         )

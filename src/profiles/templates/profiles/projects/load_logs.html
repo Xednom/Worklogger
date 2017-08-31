@@ -1,5 +1,7 @@
 {% extends 'profiles/base.html' %}
 
+{% block head %}<title>Time logs</title>{% endblock %}
+
 {% block body %}
     <form method="GET">
       <div class="form-group">{% csrf_token %}

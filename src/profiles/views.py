@@ -43,7 +43,7 @@ class RegistrationFormView(View):
             _password = form.cleaned_data['password1']
             user.set_password(_password)
             user.save()
-        return render(request, 'profiles/account/register.html', {'form':form})
+        return render(request, 'profiles/account/register.html', {'form': form})
 
 
 def login(request):
