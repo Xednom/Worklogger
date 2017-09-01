@@ -5,7 +5,6 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from profiles.models import Project, Time
 
 
-
 class RegistrationForm(UserCreationForm):
 
     username = forms.CharField(widget=forms.TextInput(
@@ -85,6 +84,7 @@ class TimeForm(forms.ModelForm):
             'placeholder': 'Select a date',
         }
     ))
+    
     class Meta:
         model = Time
         fields = (
