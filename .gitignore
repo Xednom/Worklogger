@@ -1,5 +1,12 @@
 *.pyc
 *~
 __pycache__
+*.idea
+worklogger
+Include
+Lib
+Scripts
+tcl
 /static
+src/db.sqlite3
 .DS_Store
